@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CDF6331FCB1B7B3C4F00773 /* Pods_2048_game.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C628C49AC2CD2B34F4BD2B9B /* Pods_2048_game.framework */; };
 		CE07C3D3288C37F100E83FFE /* SecondCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07C3D2288C37F100E83FFE /* SecondCollectionViewCell.swift */; };
+		CE1CDDF72896D9EC007E9A23 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CDDF62896D9EC007E9A23 /* SettingsViewController.swift */; };
 		CE4D2758287E77740029515D /* CustomUIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4D2757287E77740029515D /* CustomUIElements.swift */; };
 		CE4D275B287E7CFD0029515D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE4D275A287E7CFD0029515D /* SnapKit */; };
-		CE4D275D287E83A10029515D /* NumberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4D275C287E83A10029515D /* NumberCollectionViewCell.swift */; };
 		CE4D275F287E842A0029515D /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4D275E287E842A0029515D /* GameModel.swift */; };
 		CE8A0546287E6767008D3AFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8A0545287E6767008D3AFB /* AppDelegate.swift */; };
 		CE8A0548287E6767008D3AFB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8A0547287E6767008D3AFB /* SceneDelegate.swift */; };
@@ -24,9 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A2AE71FB8DA59EC0FB16355F /* Pods-2048 game.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-2048 game.debug.xcconfig"; path = "Target Support Files/Pods-2048 game/Pods-2048 game.debug.xcconfig"; sourceTree = "<group>"; };
+		C628C49AC2CD2B34F4BD2B9B /* Pods_2048_game.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_2048_game.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE07C3D2288C37F100E83FFE /* SecondCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondCollectionViewCell.swift; sourceTree = "<group>"; };
+		CE1CDDF62896D9EC007E9A23 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		CE4D2757287E77740029515D /* CustomUIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIElements.swift; sourceTree = "<group>"; };
-		CE4D275C287E83A10029515D /* NumberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE4D275E287E842A0029515D /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		CE8A0542287E6767008D3AFB /* 2048 game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "2048 game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8A0545287E6767008D3AFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +42,7 @@
 		CE8A0559287E68C8008D3AFB /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		CE8A055B287E6A18008D3AFB /* ModuleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleFactory.swift; sourceTree = "<group>"; };
 		CE8A055D287E6E20008D3AFB /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		F9974CE240B405138565D1B2 /* Pods-2048 game.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-2048 game.release.xcconfig"; path = "Target Support Files/Pods-2048 game/Pods-2048 game.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,17 +51,38 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE4D275B287E7CFD0029515D /* SnapKit in Frameworks */,
+				0CDF6331FCB1B7B3C4F00773 /* Pods_2048_game.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1975040EE623ACD55F9815A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C628C49AC2CD2B34F4BD2B9B /* Pods_2048_game.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		56C18ADE986323EB3E40EC57 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A2AE71FB8DA59EC0FB16355F /* Pods-2048 game.debug.xcconfig */,
+				F9974CE240B405138565D1B2 /* Pods-2048 game.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		CE8A0539287E6767008D3AFB = {
 			isa = PBXGroup;
 			children = (
 				CE8A0544287E6767008D3AFB /* 2048 game */,
 				CE8A0543287E6767008D3AFB /* Products */,
+				56C18ADE986323EB3E40EC57 /* Pods */,
+				1975040EE623ACD55F9815A9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,8 +109,8 @@
 				CE8A055D287E6E20008D3AFB /* GameViewController.swift */,
 				CE4D275E287E842A0029515D /* GameModel.swift */,
 				CE4D2757287E77740029515D /* CustomUIElements.swift */,
-				CE4D275C287E83A10029515D /* NumberCollectionViewCell.swift */,
 				CE07C3D2288C37F100E83FFE /* SecondCollectionViewCell.swift */,
+				CE1CDDF62896D9EC007E9A23 /* SettingsViewController.swift */,
 			);
 			path = "2048 game";
 			sourceTree = "<group>";
@@ -97,9 +122,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE8A0556287E6769008D3AFB /* Build configuration list for PBXNativeTarget "2048 game" */;
 			buildPhases = (
+				5CF140DA36F226B2EAE4AB98 /* [CP] Check Pods Manifest.lock */,
 				CE8A053E287E6767008D3AFB /* Sources */,
 				CE8A053F287E6767008D3AFB /* Frameworks */,
 				CE8A0540287E6767008D3AFB /* Resources */,
+				315D04B8BB5348BACA1B10D3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -138,7 +165,7 @@
 			);
 			mainGroup = CE8A0539287E6767008D3AFB;
 			packageReferences = (
-				CE4D2759287E7CFD0029515D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				CE4D2759287E7CFD0029515D /* XCRemoteSwiftPackageReference "SnapKit.git" */,
 			);
 			productRefGroup = CE8A0543287E6767008D3AFB /* Products */;
 			projectDirPath = "";
@@ -162,15 +189,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		315D04B8BB5348BACA1B10D3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-2048 game/Pods-2048 game-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-2048 game/Pods-2048 game-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-2048 game/Pods-2048 game-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5CF140DA36F226B2EAE4AB98 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-2048 game-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CE8A053E287E6767008D3AFB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				CE8A055A287E68C8008D3AFB /* AppCoordinator.swift in Sources */,
-				CE4D275D287E83A10029515D /* NumberCollectionViewCell.swift in Sources */,
 				CE07C3D3288C37F100E83FFE /* SecondCollectionViewCell.swift in Sources */,
 				CE4D275F287E842A0029515D /* GameModel.swift in Sources */,
+				CE1CDDF72896D9EC007E9A23 /* SettingsViewController.swift in Sources */,
 				CE4D2758287E77740029515D /* CustomUIElements.swift in Sources */,
 				CE8A054A287E6767008D3AFB /* ViewController.swift in Sources */,
 				CE8A055C287E6A18008D3AFB /* ModuleFactory.swift in Sources */,
@@ -318,6 +387,7 @@
 		};
 		CE8A0557287E6769008D3AFB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2AE71FB8DA59EC0FB16355F /* Pods-2048 game.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -345,6 +415,7 @@
 		};
 		CE8A0558287E6769008D3AFB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F9974CE240B405138565D1B2 /* Pods-2048 game.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -394,7 +465,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CE4D2759287E7CFD0029515D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		CE4D2759287E7CFD0029515D /* XCRemoteSwiftPackageReference "SnapKit.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -407,7 +478,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		CE4D275A287E7CFD0029515D /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CE4D2759287E7CFD0029515D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = CE4D2759287E7CFD0029515D /* XCRemoteSwiftPackageReference "SnapKit.git" */;
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */

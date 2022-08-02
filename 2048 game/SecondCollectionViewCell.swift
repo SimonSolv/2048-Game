@@ -4,14 +4,21 @@ import SnapKit
 class SecondCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "Second"
-    
+    var sizeOfField: Int? {
+        didSet {
+            guard sizeOfField != nil else {
+                sizeOfField = 4
+                return}
+            number.layer.borderWidth = CGFloat(32/sizeOfField!)
+            number.font = UIFont.boldSystemFont(ofSize: CGFloat(120/sizeOfField!))
+        }
+    }
     var source: Int? {
         didSet {
             if source != nil {
                 if source == 0 {
                     number.layer.borderColor = #colorLiteral(red: 0.9536803002, green: 0.9825797033, blue: 0.9825797033, alpha: 1)
                     number.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
-                    number.layer.borderWidth = 8
                     number.text = ""
                 }
                 else if source == 4 {
@@ -76,12 +83,10 @@ class SecondCollectionViewCell: UICollectionViewCell {
     
     lazy var number: UILabel = {
        let view = UILabel()
-        view.layer.opacity = 0.5
+   //     view.layer.opacity = 0.5
         view.layer.cornerRadius = 10
         view.clipsToBounds = true
-        view.layer.borderWidth = 8
         view.textAlignment = .center
-        view.font = .boldSystemFont(ofSize: 30)
         return view
     }()
     override init(frame: CGRect) {
@@ -89,10 +94,9 @@ class SecondCollectionViewCell: UICollectionViewCell {
         setupView()
         contentView.layer.cornerRadius = 10
     }
-
+    
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupView()
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupView() {

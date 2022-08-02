@@ -9,20 +9,30 @@ class GameViewController: UIViewController, Coordinated {
     
     var moveScore = 0
     
+    var fieldWidth = 40
+    
     var fieldSize: Int = 4
     
     var matrix: [[Int]] = []
+    
+    var layoutK: CGFloat = 32.0
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = .systemGray2
         view.register(SecondCollectionViewCell.self, forCellWithReuseIdentifier: SecondCollectionViewCell.identifier )
         view.dataSource = self
         view.delegate = self
         return view
+    }()
+    
+    let infoButton: UIButton = {
+        let button = UIButton(type: .infoDark)
+        button.addTarget(self, action: #selector(infoTapped), for: .touchUpInside)
+        return button
     }()
     
     lazy var movesCountPlate: UILabel = {
@@ -44,11 +54,23 @@ class GameViewController: UIViewController, Coordinated {
     
     lazy var startButton: UIButton = {
        let button = UIButton()
-        button.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        button.backgroundColor = .systemGreen
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Start game", for: .normal)
+        button.layer.cornerRadius = 10
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(startGame), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var settingsButton: UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .systemBlue
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Settings", for: .normal)
+        button.layer.cornerRadius = 10
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
         return button
     }()
     // MARK: - Functions
@@ -59,6 +81,26 @@ class GameViewController: UIViewController, Coordinated {
         startButton.isHidden = true
     }
     
+    func clearField() {
+        matrix = buildMatrix(size: fieldSize)
+        startButton.isHidden = false
+        collectionView.reloadData()
+    }
+    
+    @objc func settingsTapped() {
+        let controller = SettingsViewController(controller: self)
+        self.present(controller, animated: true)
+    }
+    
+    @objc func infoTapped() {
+        let alert = UIAlertController(title: "Field size", message: "Current fieldsize is \(fieldSize)", preferredStyle: .actionSheet)
+  //      alert.addTextField(configurationHandler: nil)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: { _ in
+            
+        }))
+        present(alert, animated: true)
+    }
+    
     func updateMove() {
         moveScore += 1
         movesCountPlate.text = "Moves: \(moveScore)"
@@ -66,12 +108,25 @@ class GameViewController: UIViewController, Coordinated {
     // MARK: - ViewDidLoad
     override func viewDidLoad() {
         matrix = buildMatrix(size: fieldSize)
-        view.backgroundColor = #colorLiteral(red: 0.8774181008, green: 0.8884639144, blue: 0.8882696033, alpha: 1)
-        view.addSubview(field)
-        view.addSubview(collectionView)
-        view.addSubview(startButton)
-        view.addSubview(movesCountPlate)
+        switch fieldSize {
+        case 4:
+            layoutK = 6
+        case 5:
+            layoutK = 4
+        case 6:
+            layoutK = 2
+            fieldWidth = 10
+        default:
+            layoutK = 4
+        }
+        setupViews()
         setupConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupViews()
+        setupConstraints()
+        collectionView.reloadData()
     }
     // MARK: - Matrix Operations
     func buildMatrix(size: Int) -> [[Int]] {
@@ -84,6 +139,17 @@ class GameViewController: UIViewController, Coordinated {
             result.append(array)
         }
         return result
+    }
+    
+    func setupViews() {
+        view.backgroundColor = .systemGray2
+        view.addSubview(field)
+        view.addSubview(collectionView)
+        view.addSubview(startButton)
+        view.addSubview(movesCountPlate)
+        view.addSubview(infoButton)
+        view.addSubview(settingsButton)
+        collectionView.isScrollEnabled = false
     }
 
     func randomize(row : [[Int]]) -> [Int] {
@@ -153,7 +219,7 @@ class GameViewController: UIViewController, Coordinated {
                 }
                 matrix[row] = replaceRow
             }
-            updateMove()
+
         case .left:
             for var row in 0...fieldSize-1 {
                 var replaceRow: [Int] = []
@@ -167,7 +233,7 @@ class GameViewController: UIViewController, Coordinated {
                 }
                 matrix[row] = replaceRow
             }
-            updateMove()
+
         case .up:
             for var place in 0...fieldSize-1 {
                 var replaceRow: [Int] = []
@@ -184,7 +250,7 @@ class GameViewController: UIViewController, Coordinated {
                     matrix[i][place] = replaceRow [i]
                 }
             }
-            updateMove()
+
         case .down:
             for var place in 0...fieldSize-1 {
                 var replaceRow: [Int] = []
@@ -197,10 +263,10 @@ class GameViewController: UIViewController, Coordinated {
                     replaceRow.insert(0, at: 0)
                 }
                 for i in 0...fieldSize-1 {
-                    matrix[i][place] = replaceRow [i]
+                    matrix[i][place] = replaceRow[i]
                 }
             }
-            updateMove()
+            
         }
     }
     
@@ -213,7 +279,6 @@ class GameViewController: UIViewController, Coordinated {
                         let sumNumber = matrix[row][place] + matrix[row][place+1]
                         matrix[row][place] = 0
                         matrix [row][place+1] = sumNumber
-                        continue
                         continue
                     }
                 }
@@ -263,37 +328,34 @@ class GameViewController: UIViewController, Coordinated {
         let direction = sender.direction
         switch direction {
         case .right:
-            print("Gesture direction: Right")
             moveCells(direction: .right)
             summ(direction: .right)
             addRandom()
+            updateMove()
             collectionView.reloadData()
-            print ("Result matrix:")
-            for i in 0...fieldSize-1 {
-                print("\(matrix[i])")
-            }
         case .left:
             moveCells(direction: .left)
             summ(direction: .left)
             addRandom()
+            updateMove()
             collectionView.reloadData()
-            print("Gesture direction: Left")
         case .up:
             moveCells(direction: .up)
             summ(direction: .up)
             addRandom()
+            updateMove()
             collectionView.reloadData()
-            print("Gesture direction: Up")
         case .down:
             moveCells(direction: .down)
             summ(direction: .down)
             addRandom()
+            updateMove()
             collectionView.reloadData()
-            print("Gesture direction: Down")
         default:
             print("Unrecognized Gesture Direction")
         }
     }
+    
     init(coordinator: CoordinatorProtocol) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
@@ -306,8 +368,8 @@ class GameViewController: UIViewController, Coordinated {
     func setupConstraints() {
         field.snp.makeConstraints { (make) in
             make.top.equalTo(view.snp.top).offset(200)
-            make.leading.equalTo(view.snp.leading).offset(40)
-            make.trailing.equalTo(view.snp.trailing).offset(-40)
+            make.leading.equalTo(view.snp.leading).offset(fieldWidth)
+            make.trailing.equalTo(view.snp.trailing).offset(-fieldWidth)
             make.height.equalTo(self.field.snp.width)
         }
 
@@ -324,11 +386,25 @@ class GameViewController: UIViewController, Coordinated {
             make.height.equalTo(50)
         }
         
+        settingsButton.snp.makeConstraints { (make) in
+            make.top.equalTo(view.snp.bottom).offset(-100)
+            make.leading.equalTo(field.snp.leading)
+            make.width.equalTo(field.snp.width)
+            make.height.equalTo(50)
+        }
+        
         movesCountPlate.snp.makeConstraints { (make) in
             make.top.equalTo(view.snp.top).offset(100)
             make.leading.equalTo(view.snp.leading).offset(-50)
             make.trailing.equalTo(view.snp.trailing).offset(-50)
             make.height.equalTo(50)
+        }
+        
+        infoButton.snp.makeConstraints { (make) in
+            make.top.equalTo(movesCountPlate.snp.top).offset(15)
+            make.leading.equalTo(field.snp.leading)
+           // make.trailing.equalTo(view.snp.trailing).offset(-50)
+          //  make.height.equalTo(50)
         }
     }
 
@@ -348,8 +424,7 @@ extension GameViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecondCollectionViewCell.identifier, for: indexPath) as! SecondCollectionViewCell
             cell.source = matrix[indexPath.section][indexPath.row]
-//        cell.layer.borderWidth = 5
-//        cell.layer.backgroundColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+        cell.sizeOfField = fieldSize
         return cell
     }
 }
@@ -357,15 +432,15 @@ extension GameViewController: UICollectionViewDataSource {
 extension GameViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (Int(field.bounds.width) - 40 - 5 * fieldSize) / fieldSize, height: (Int(field.bounds.width) - 40 - 5 * fieldSize) / fieldSize)
+        return CGSize(width: (Int(field.bounds.width) - 50 - 5 * fieldSize) / fieldSize, height: (Int(field.bounds.width) - 50 - 5 * fieldSize) / fieldSize)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
+        return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        return UIEdgeInsets(top: CGFloat(layoutK), left: CGFloat(layoutK), bottom: CGFloat(layoutK), right: CGFloat(layoutK))
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
