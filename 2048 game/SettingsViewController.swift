@@ -5,6 +5,8 @@ class SettingsViewController: UIViewController {
     
     var rootVC: GameViewController
     
+    var selectedSize = 0
+    
     let dropMenu: DropDown = {
         let menu = DropDown()
         menu.dataSource = [
@@ -16,7 +18,7 @@ class SettingsViewController: UIViewController {
     }()
     lazy var navBar: UINavigationBar = {
         let bar = UINavigationBar()
-        bar.barTintColor = .white
+        bar.barTintColor = .systemBackground
         bar.translatesAutoresizingMaskIntoConstraints = false
         return bar
     }()
@@ -67,17 +69,17 @@ class SettingsViewController: UIViewController {
         dropMenu.selectionAction = { index, title in
             switch index {
             case 0:
-                self.rootVC.fieldSize = 4
-                self.settingFieldLabel.setTitle("FieldSize is \(self.rootVC.fieldSize)x\(self.rootVC.fieldSize)", for: .normal)
+                self.selectedSize = 4
+                self.settingFieldLabel.setTitle("FieldSize is 4x4", for: .normal)
             case 1:
-                self.rootVC.fieldSize = 5
-                self.settingFieldLabel.setTitle("FieldSize is \(self.rootVC.fieldSize)x\(self.rootVC.fieldSize)", for: .normal)
+                self.selectedSize = 5
+                self.settingFieldLabel.setTitle("FieldSize is 5x5", for: .normal)
             case 2:
-                self.rootVC.fieldSize = 6
-                self.settingFieldLabel.setTitle("FieldSize is \(self.rootVC.fieldSize)x\(self.rootVC.fieldSize)", for: .normal)
+                self.selectedSize = 6
+                self.settingFieldLabel.setTitle("FieldSize is 6x6", for: .normal)
             default:
-                self.rootVC.fieldSize = 4
-                self.settingFieldLabel.setTitle("FieldSize is \(self.rootVC.fieldSize)x\(self.rootVC.fieldSize)", for: .normal)
+                self.selectedSize = 4
+                self.settingFieldLabel.setTitle("FieldSize is 4x4", for: .normal)
             }
         }
         navBar.setItems([titleItem], animated: false)
@@ -93,7 +95,16 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func saveSettings() {
+        if selectedSize == 4 {
+            self.rootVC.fieldSize = 4
+        } else if selectedSize == 5 {
+            self.rootVC.fieldSize = 5
+        } else if selectedSize == 6 {
+            self.rootVC.fieldSize = 6
+        } else { return }
         rootVC.clearField()
+        rootVC.moveScore = 0
+        rootVC.movesCountPlate.text = "Moves: \(rootVC.moveScore)"
         self.dismiss(animated: true)
     }
     

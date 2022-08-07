@@ -75,7 +75,9 @@ class GameViewController: UIViewController, Coordinated {
     }()
     // MARK: - Functions
     @objc func startGame() {
+        clearField()
         addRandom()
+        moveScore = 0
         collectionView.reloadData()
         addSwipe()
         startButton.isHidden = true
@@ -189,16 +191,86 @@ class GameViewController: UIViewController, Coordinated {
             print("Add number \(appendingNumber)")
         }
         else {
-            gameOver = true
-            print("Game Over!")
-            return
+            if endGame(matrix: matrix) {
+                let alert = UIAlertController(title: "Game over!", message: "You don't have any moves", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Start new", style: .cancel, handler: { _ in
+                    self.clearField()
+                    self.startGame()
+                }))
+                alert.addAction(UIAlertAction(title: "End game", style: .destructive, handler: { _ in
+                    self.startButton.isHidden = false
+                    self.view.gestureRecognizers?.removeAll()
+                }))
+                present(alert, animated: true)
+                print("Game Over!")
+                return
+            }
         }
     }
     
+    func endGame(matrix: [[Int]]) -> Bool {
+        var rightSum = false
+        var leftSum = false
+        var upSum = false
+        var downSum = false
+        let sourceMatrix = matrix
+        var newMatrix = matrix
+        for var row in 0...fieldSize-1 {
+            for var place in 0...fieldSize-2 {
+                if newMatrix[row][place] == newMatrix[row][place+1] {
+                    let sumNumber = newMatrix[row][place] + newMatrix[row][place+1]
+                    newMatrix[row][place] = 0
+                    newMatrix [row][place+1] = sumNumber
+                    continue
+                }
+            }
+        }
+        if newMatrix == sourceMatrix { rightSum = true }
+        newMatrix = matrix
+        for var row in 0...fieldSize-1 {
+            for var place in 0...fieldSize-2 {
+                if newMatrix[row][place] == newMatrix[row][place+1] {
+                    let sumNumber = newMatrix[row][place] + newMatrix [row][place+1]
+                    newMatrix[row][place] = 0
+                    newMatrix [row][place+1] = sumNumber
+                    continue
+                }
+            }
+        }
+        if newMatrix == sourceMatrix { leftSum = true }
+        newMatrix = matrix
+        for var stolbec in 0...fieldSize-1 {
+            for var stroka in 0...fieldSize-2 {
+                if newMatrix[stroka][stolbec] == newMatrix[stroka+1][stolbec] {
+                    let sumNumber = newMatrix[stroka][stolbec] + newMatrix [stroka+1][stolbec]
+                    newMatrix[stroka+1][stolbec] = 0
+                    newMatrix[stroka][stolbec] = sumNumber
+                    continue
+                }
+            }
+        }
+        if newMatrix == sourceMatrix { upSum = true }
+        newMatrix = matrix
+        for var stolbec in 0...fieldSize-1 {
+            for var stroka in 0...fieldSize-2 {
+                if newMatrix[stroka][stolbec] == newMatrix[stroka+1][stolbec] {
+                    let sumNumber = newMatrix[stroka][stolbec] + newMatrix [stroka+1][stolbec]
+                    newMatrix[stroka][stolbec] = 0
+                    newMatrix[stroka+1][stolbec] = sumNumber
+                    continue
+                }
+            }
+        }
+        if newMatrix == sourceMatrix { downSum = true }
+        newMatrix = matrix
+        if rightSum == true && leftSum == true && upSum == true && downSum == true {
+            return true
+        } else {return false}
+    }
     func addSwipe() {
         let directions: [UISwipeGestureRecognizer.Direction] = [.right, .left, .up, .down]
         for direction in directions {
-            let gesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+            let gesture = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwipe))
             gesture.direction = direction
             self.view.addGestureRecognizer(gesture)
         }
